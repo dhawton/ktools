@@ -1,8 +1,5 @@
 #!/bin/sh
 
-apk update
-apk add --no-ache git openssh
-
 mkdir -p ~/.ssh
 echo $SSH_KEY | base64 -d > ~/.ssh/id_ecdsa
 chmod 600 ~/.ssh/id_ecdsa

@@ -3,6 +3,9 @@ FROM line/kubectl-kustomize:1.22.4-4.4.1
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+RUN apk update && \
+    apk add --no-cache git openssh
+
 ENV SSH_KEY=
 ENV IMAGE=
 ENV IMAGE_TAG=
