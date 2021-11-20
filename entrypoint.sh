@@ -10,7 +10,7 @@ if [[ -d $MANIFEST_REPO ]]; then
     rm -rf $MANIFEST_REPO
 fi
 
-git clone git@${MANIFEST_HOST}/${MANIFEST_USER}/${MANIFEST_REPO}.git
+git clone git@${MANIFEST_HOST}:${MANIFEST_USER}/${MANIFEST_REPO}.git
 
 cd $MANIFEST_REPO
 git checkout $MANIFEST_BRANCH
@@ -22,4 +22,4 @@ done
 
 git add .
 git commit --allow-empty -m "Update image tags"
-git push git@${MANIFEST_HOST}/${MANIFEST_USER}/${MANIFEST_REPO}.git $MANIFEST_BRANCH
+git push git@${MANIFEST_HOST}:${MANIFEST_USER}/${MANIFEST_REPO}.git $MANIFEST_BRANCH
