@@ -14,7 +14,10 @@ if [[ -d $MANIFEST_REPO ]]; then
 fi
 
 git clone git@${MANIFEST_HOST}/${MANIFEST_USER}/${MANIFEST_REPO}.git
+
+cd $MANIFEST_REPO
 git checkout $MANIFEST_BRANCH
+cd $KUSTOMIZE_PATH
 
 for IMG in $(echo $IMAGE | sed "s/,/ /g"); do
     kustomize edit set image $IMG=${IMG}:${IMAGE_TAG}
