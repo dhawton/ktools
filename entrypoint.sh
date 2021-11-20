@@ -1,6 +1,6 @@
 #!/bin/sh
 
-func chkfail() {
+function chkfail() {
   if [ $? -ne 0 ]; then
     echo "Failed ($?)"
     exit 1
