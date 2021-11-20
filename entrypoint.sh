@@ -26,7 +26,7 @@ if [[ -d $MANIFEST_REPO ]]; then
     rm -rf $MANIFEST_REPO
 fi
 
-git clone git@${MANIFEST_HOST}:${MANIFEST_USER}/${MANIFEST_REPO}.git
+git clone git@${MANIFEST_HOST}:${MANIFEST_USER}/${MANIFEST_REPO}.git --config core.sshCommand="ssh -i ~/.ssh/id_ecdsa"
 chkfail
 
 cd $MANIFEST_REPO
