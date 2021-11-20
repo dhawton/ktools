@@ -8,6 +8,11 @@ function chkfail() {
 }
 
 mkdir -p ~/.ssh
+cat <<EOF > ~/.ssh/config
+Host github.com
+  HostName github.com
+  IdentityFile ~/.ssh/id_ecdsa
+EOF
 echo $SSH_KEY | base64 -d > ~/.ssh/id_ecdsa
 chkfail
 
