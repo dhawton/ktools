@@ -1,0 +1,43 @@
+kind: pipeline
+type: kubernetes
+name: drone-pipeline
+
+trigger:
+  event:
+  - push
+  branches:
+  - main
+
+steps:
+- name: Build and Push Image
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: dockerhub_username
+    password:
+      from_secret: dockerhub_password
+    repo: dhawton/ktools
+    tags:
+    - latest
+    - ${DRONE_COMMIT_SHA:0:8}
+  when:
+    event:
+    - push
+    branch:
+    - main
+- name: Slack Webhook
+  image: plugins/slack
+  settings:
+    webhook:
+      from_secret: slack_webhook
+    channel: drone-messages
+    template: >
+      {{#success build.status}}
+        Success! Build #{{build.number}} for {{repo.name}}, event {{build.event}}, on {{build.branch}} succeeded.
+      {{else}}
+        Uh-Oh! Build #{{build.number}} for {{repo.name}}, event {{build.event}}, on {{build.branch}} failed. <@everyone>
+      {{/success}}
+  when:
+    status:
+    - success
+    - failure
