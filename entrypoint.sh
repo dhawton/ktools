@@ -8,16 +8,11 @@ function chkfail() {
 }
 
 mkdir -p ~/.ssh
-cat <<EOF > ~/.ssh/config
-Host github.com
-  HostName github.com
-  IdentityFile ~/.ssh/id_ecdsa
-EOF
-echo $SSH_KEY | base64 -d > ~/.ssh/id_ecdsa
+echo $SSH_KEY | base64 -d > ~/.ssh/id_rsa
 chkfail
 
-ls -l ~/.ssh/id_ecdsa
-chmod 600 ~/.ssh/id_ecdsa
+ls -l ~/.ssh/id_rsa
+chmod 600 ~/.ssh/id_rsa
 chmod 700 ~/.ssh
 ssh-keyscan $MANIFEST_HOST >> ~/.ssh/known_hosts
 chkfail
@@ -26,7 +21,7 @@ if [[ -d $MANIFEST_REPO ]]; then
     rm -rf $MANIFEST_REPO
 fi
 
-git clone git@${MANIFEST_HOST}:${MANIFEST_USER}/${MANIFEST_REPO}.git --config core.sshCommand="ssh -i ~/.ssh/id_ecdsa"
+git clone git@${MANIFEST_HOST}:${MANIFEST_USER}/${MANIFEST_REPO}.git --config core.sshCommand="ssh -i ~/.ssh/id_rsa"
 chkfail
 
 cd $MANIFEST_REPO
