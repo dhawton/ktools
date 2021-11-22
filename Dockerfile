@@ -6,7 +6,8 @@ RUN chmod +x /entrypoint.sh
 RUN apk update && \
     apk add --no-cache git openssh
 
-ENV SSH_KEY=
+ENV GH_USER=
+ENV GH_TOKEN=
 ENV IMAGE=
 ENV IMAGE_TAG=
 ENV MANIFEST_HOST=

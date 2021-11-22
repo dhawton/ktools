@@ -7,21 +7,13 @@ function chkfail() {
   fi
 }
 
-mkdir -p ~/.ssh
-echo $SSH_KEY | base64 -d > ~/.ssh/id_rsa
-chkfail
-
-ls -l ~/.ssh/id_rsa
-chmod 600 ~/.ssh/id_rsa
-chmod 700 ~/.ssh
-ssh-keyscan $MANIFEST_HOST >> ~/.ssh/known_hosts
-chkfail
+echo "machine github.com login $GH_USER password $GH_TOKEN" > ~/.netrc
 
 if [[ -d $MANIFEST_REPO ]]; then
     rm -rf $MANIFEST_REPO
 fi
 
-git clone git@${MANIFEST_HOST}:${MANIFEST_USER}/${MANIFEST_REPO}.git --config core.sshCommand="ssh -i ~/.ssh/id_rsa"
+git clone https://${MANIFEST_HOST}/${MANIFEST_USER}/${MANIFEST_REPO}
 chkfail
 
 cd $MANIFEST_REPO
@@ -38,5 +30,5 @@ git add .
 chkfail
 git commit --allow-empty -m "Update image tags"
 chkfail
-git push git@${MANIFEST_HOST}:${MANIFEST_USER}/${MANIFEST_REPO}.git $MANIFEST_BRANCH
+git push https://${MANIFEST_HOST}/${MANIFEST_USER}/${MANIFEST_REPO} $MANIFEST_BRANCH
 chkfail
