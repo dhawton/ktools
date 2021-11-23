@@ -9,8 +9,14 @@ function chkfail() {
 
 echo "machine github.com login $GH_USER password $GH_TOKEN" > ~/.netrc
 
+echo "Configuring user.email = $GH_USER_EMAIL"
 git config --global user.email $GH_USER_EMAIL
+echo "Configuring user.name = $GH_USER_NAME"
 git config --global user.name $GH_USER_NAME
+
+git config --global -l
+git config --system -l
+git config --local -l
 
 if [[ -d $MANIFEST_REPO ]]; then
     rm -rf $MANIFEST_REPO
